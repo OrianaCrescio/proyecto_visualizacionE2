@@ -5,6 +5,8 @@ const ServoMotor = (() => {
     const DESPLAZAMIENTO = ANGULO_MAX - ANGULO_MIN;
 
     let puerto = null;
+    let abriendo = null;              // evita abrir el puerto dos veces a la vez
+    let colaEnvios = Promise.resolve(); // los envíos van de a uno
 
     function normalizarPorcentaje(valor) {
         const numero = Number(valor);
@@ -18,53 +20,72 @@ const ServoMotor = (() => {
         return Math.round(Math.min(ANGULO_MAX, Math.max(ANGULO_MIN, angulo)));
     }
 
-    async function abrirPuerto() {
-        if (!("serial" in navigator)) {
-            return false;
-        }
+    function estaConectado() {
+        return Boolean(puerto && puerto.writable);
+    }
 
-        if (puerto && puerto.readable) {
-            return true;
-        }
+    async function abrir(p) {
+        if (abriendo) return abriendo;
+        abriendo = (async () => {
+            try {
+                if (!p.writable) {
+                    await p.open({ baudRate: 9600 });
+                }
+                puerto = p;
+                return true;
+            } catch (error) {
+                console.warn("No se pudo abrir el puerto serial del Arduino:", error);
+                puerto = null;
+                return false;
+            } finally {
+                abriendo = null;
+            }
+        })();
+        return abriendo;
+    }
 
+    // Solo se llama desde el clic del botón (Chrome exige un gesto del usuario).
+    async function conectar() {
+        if (!("serial" in navigator)) return false;
+        if (estaConectado()) return true;
         try {
-            puerto = await navigator.serial.requestPort();
-            await puerto.open({ baudRate: 9600 });
-            return true;
+            const elegido = await navigator.serial.requestPort();
+            const ok = await abrir(elegido);
+            if (ok) resetear();
+            return ok;
         } catch (error) {
-            console.warn("No se pudo abrir el puerto serial del Arduino:", error);
+            console.warn("No se eligió un puerto:", error);
             return false;
         }
     }
 
-    async function conectar() {
-        const ok = await abrirPuerto();
-        if (ok) {
-            resetear();
-        }
+    // Reconecta sin preguntar a un puerto que ya autorizaste antes.
+    async function reconectarAutorizado() {
+        if (!("serial" in navigator)) return false;
+        const puertos = await navigator.serial.getPorts();
+        if (puertos.length === 0) return false;
+        const ok = await abrir(puertos[0]);
+        if (ok) resetear();
         return ok;
     }
 
-    async function enviarAngulo(angulo) {
-        if (!("serial" in navigator)) {
-            return;
-        }
+    function enviarAngulo(angulo) {
+        // Si no hay conexión, no hace nada (ya no intenta abrir el selector).
+        if (!estaConectado()) return;
 
-        const numero = Math.round(angulo);
-        const valido = Math.min(ANGULO_MAX, Math.max(ANGULO_MIN, numero));
+        const valido = Math.min(ANGULO_MAX, Math.max(ANGULO_MIN, Math.round(angulo)));
 
-        try {
-            if (!(await abrirPuerto())) {
-                return;
-            }
-
+        colaEnvios = colaEnvios.then(async () => {
+            if (!estaConectado()) return;
             const escritor = puerto.writable.getWriter();
-            const encoder = new TextEncoder();
-            await escritor.write(encoder.encode(`${valido}\n`));
-            escritor.releaseLock();
-        } catch (error) {
-            console.warn("No se pudo enviar el ángulo al Arduino:", error);
-        }
+            try {
+                await escritor.write(new TextEncoder().encode(`${valido}\n`));
+            } catch (error) {
+                console.warn("No se pudo enviar el ángulo al Arduino:", error);
+            } finally {
+                escritor.releaseLock();
+            }
+        });
     }
 
     function resetear() {
@@ -72,8 +93,7 @@ const ServoMotor = (() => {
     }
 
     function actualizarDesdePorcentaje(valor) {
-        const porcentaje = normalizarPorcentaje(valor);
-        enviarAngulo(porcentajeAangulo(porcentaje));
+        enviarAngulo(porcentajeAangulo(valor));
     }
 
     window.addEventListener("beforeunload", () => {
@@ -87,6 +107,8 @@ const ServoMotor = (() => {
         ANGULO_MAX,
         ANGULO_NEUTRO,
         conectar,
+        reconectarAutorizado,
+        estaConectado,
         resetear,
         actualizarDesdePorcentaje,
         porcentajeAangulo,
@@ -106,15 +128,20 @@ window.addEventListener("DOMContentLoaded", () => {
         boton.textContent = "Arduino conectado";
     };
 
+    if (!("serial" in navigator)) {
+        boton.textContent = "Web Serial no disponible";
+        boton.disabled = true;
+        boton.setAttribute("aria-disabled", "true");
+        return;
+    }
+
+    // Al recargar la página, intenta reconectar solo si ya diste permiso antes.
+    ServoMotor.reconectarAutorizado().then((ok) => {
+        if (ok) marcarComoConectado();
+    });
+
     boton.addEventListener("click", async () => {
         if (boton.disabled) return;
-
-        if (!("serial" in navigator)) {
-            boton.textContent = "Web Serial no disponible";
-            boton.disabled = true;
-            boton.setAttribute("aria-disabled", "true");
-            return;
-        }
 
         const conectado = await ServoMotor.conectar();
         if (conectado) {
