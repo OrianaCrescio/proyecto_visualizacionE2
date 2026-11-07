@@ -22,3 +22,6 @@ __pycache__/
 data/
 !docs/evidencia/**/pagina/data/
 !docs/evidencia/**/pagina/data/**
+
+# Datos que usa la página (livianos, se suben)
+!pagina/data/
