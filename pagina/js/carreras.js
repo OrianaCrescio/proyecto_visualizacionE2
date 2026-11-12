@@ -89,7 +89,7 @@ const Carreras = (() => {
         }
 
         seleccionTitulo.text("Ninguna");
-        seleccionDetalle.text("Haz clic en un área o una carrera para enviar su porcentaje de mujeres al servomotor.");
+        seleccionDetalle.text("Haz clic en un área o una carrera para ver su porcentaje de mujeres en la sala de sillas.");
     }
 
     function syncServoConSeleccionActual() {

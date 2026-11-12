@@ -639,7 +639,7 @@ function actualizarSeleccionRegion() {
 
     if (!regionSeleccionada) {
         titulo.text("Ninguna");
-        detalle.text("Haz clic en una región para enviar su porcentaje de mujeres al servomotor.");
+        detalle.text("Haz clic en una región para ver su porcentaje de mujeres en la sala de sillas.");
         return;
     }
 
