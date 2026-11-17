@@ -58,7 +58,7 @@ El detalle de fuentes y variables está en [`investigacion.md`](investigacion.md
 |---|---|
 | **Versión / fecha** | V1 · 31/10/2026 |
 | **Commit / tag** | tag `v1` (commit `6939953`) |
-| **Evidencia** | [Video](evidencia/V1/V1_balanza_servomotor.mp4) · [cuaderno: la idea](evidencia/V1/V1_cuaderno_idea_balanza.jpg) · [cuaderno: boceto del prototipo](evidencia/V1/V1_cuaderno_boceto_prototipo.jpg) |
+| **Evidencia** | [Página de V1](https://orianacrescio.github.io/proyecto_visualizacionE2/docs/evidencia/V1/pagina/) · [Video](evidencia/V1/V1_balanza_servomotor.mp4) · [cuaderno: la idea](evidencia/V1/V1_cuaderno_idea_balanza.jpg) · [cuaderno: boceto del prototipo](evidencia/V1/V1_cuaderno_boceto_prototipo.jpg) |
 
 **Decisiones iniciales**
 - Una balanza de género: un brazo de cartón sobre un soporte en forma de pirámide, con hombres en amarillo
@@ -108,7 +108,7 @@ El detalle de fuentes y variables está en [`investigacion.md`](investigacion.md
 |---|---|
 | **Versión / fecha** | V2 · 12/11/2026 |
 | **Commit / tag** | tag `v2` (commit `d7638f2`, el del video; la conexión a la maqueta es `b7ac553`) |
-| **Evidencia** | [Video](evidencia/V2/V2_sala_de_clases_leds.mp4) |
+| **Evidencia** | [Página de V2](https://orianacrescio.github.io/proyecto_visualizacionE2/docs/evidencia/V2/pagina/) · [Video](evidencia/V2/V2_sala_de_clases_leds.mp4) |
 
 **Qué cambió respecto a V1**
 - La balanza y el servomotor se reemplazan por una sala de cartón con 30 sillas. Cada silla es un cubo de
@@ -175,7 +175,7 @@ tobillera y lo compara con la altura y velocidad que tendría en otros planetas.
 |---|---|
 | **Versión / fecha** | V3 · 17/11/2026 |
 | **Commit / tag** | tag `v3` (commit `8e280dc`, el de la evidencia; el control desde el teléfono es `0d0790f` y el cableado `381870f`) |
-| **Evidencia** | [Video](evidencia/V3/V3_sala_leds_pagina_conectada.mp4) |
+| **Evidencia** | [Página de V3](https://orianacrescio.github.io/proyecto_visualizacionE2/docs/evidencia/V3/pagina/) · [Video](evidencia/V3/V3_sala_leds_pagina_conectada.mp4) |
 
 **Qué cambió respecto a V2**
 - Se puede elegir región, área o carrera desde un teléfono: la página muestra un QR, el teléfono abre la
