@@ -4,14 +4,18 @@
 
 - **Grupo:** N°1
 - **Integrantes:** Antonia Ramos · Oriana Crescio · Florencia Godoy
-- **GitHub Pages:** https://orianacrescio.github.io/proyecto_visualizacion/
+- **GitHub Pages:** https://orianacrescio.github.io/proyecto_visualizacionE2/
 - **Repositorio:** https://github.com/OrianaCrescio/proyecto_visualizacionE2
-- **Video final (V4):** [YouTube](https://youtu.be/LmSdQFqW3WI)
+- **Video final (V4):** [pendiente: link de YouTube de la E2]
 
 > YouTube redujo la definición de los videos. Para verlos con mayor nitidez, recomendamos usar las
-> copias originales incluidas en el repositorio: [V1](evidencia/v1/videos/evidenciaV1.mp4) ·
-> [V2](evidencia/v2/videos/evidenciaV2.mp4) · [V3](evidencia/v3/videos/V3.mp4) · [V4](evidencia/v4/videos/V4.mp4).
-> Son los mismos videos.
+> copias originales incluidas en el repositorio: [V1](evidencia/V1/V1_balanza_servomotor.mp4) ·
+> [V2](evidencia/V2/V2_sala_de_clases_leds.mp4) · [V3](evidencia/V3/V3_sala_leds_pagina_conectada.mp4) ·
+> V4 (pendiente). Son los mismos videos.
+
+> La página publicada en GitHub Pages es estática: se puede navegar y conectar el Arduino por USB desde
+> Chrome, pero no sincroniza la selección con un teléfono. Esa parte necesita `servidor.py` corriendo en el
+> computador (ver el README).
 
 ---
 
@@ -19,13 +23,32 @@
 
 ### 2.1 Mensaje principal
 
-[Completar con la idea central del proyecto.]
+Las mujeres ya son mayoría en la matrícula de educación superior en Chile: pasaron de 42,7 % en 1984 a
+53,3 % en 2025 y cruzaron la paridad en 2008. Pero ese total esconde una segregación por área. En 2026,
+Educación tiene 75,2 % de mujeres y Salud 74,5 %, mientras Tecnología llega a 21,1 % (y TIC, dentro de ella,
+a 15,1 %). Queremos que estudiantes de enseñanza media que están eligiendo carrera, y quienes diseñan
+políticas para impulsar a las mujeres en STEM, vean que la igualdad del total no es igualdad en cada carrera.
+
+En la Entrega 2 el mismo mensaje se puede ver sin leer un gráfico: una sala de clases de cartón con 30 sillas.
+Al elegir una región, un área o una carrera en la página, tantas sillas como corresponda al porcentaje de
+mujeres se ponen moradas y el resto queda amarillo.
 
 ### 2.2 Origen y procesamiento de los datos
 
-- [Completar con la fuente de datos regionales.]
-- [Completar con la fuente de datos por carrera y área.]
-- [Completar con la transformación y cálculo de proporciones de mujeres/hombres.]
+- **Regiones:** serie de matrícula por sexo y región, 1984–2025, de la Biblioteca del Congreso Nacional
+  (SIIT, estadísticas territoriales). `procesar_regiones.py` la convierte en `matricula_genero_region.csv`.
+  El mapa sale de los mapas vectoriales de la BCN (comunas), agrupados en regiones con
+  `generar_mapa_regiones.py`.
+- **Carreras y áreas:** microdatos de matrícula del Centro de Estudios MINEDUC, 2007–2026, un registro por
+  estudiante. Usamos sexo (`gen_alu`), área del conocimiento y carrera genérica, solo pregrado.
+  `procesar_carreras.py` los agrega y `resumir_carreras.py` deja `carreras_pregrado.csv`, que es lo que
+  carga la página. Los totales por sexo calzan con los de la serie de la BCN (por ejemplo 2015: 592.698
+  hombres y 640.345 mujeres en ambas).
+- **Proporción:** mujeres / (hombres + mujeres) de lo que esté seleccionado. En la maqueta se redondea al
+  entero más cercano de 30 sillas, y solo se muestran 0 o 30 sillas moradas si la proporción es exactamente
+  0 o 1. Así una carrera con 99 % de mujeres no se ve igual que una con 100 %.
+
+El detalle de fuentes y variables está en [`investigacion.md`](investigacion.md).
 
 ---
 
@@ -33,28 +56,49 @@
 
 | Campo | |
 |---|---|
-| **Versión / fecha** | V1 · [fecha] |
-| **Commit / tag** | [completar] |
-| **Evidencia** | [completar] |
+| **Versión / fecha** | V1 · 31/10/2026 |
+| **Commit / tag** | `6939953` (sin tag todavía) |
+| **Evidencia** | [Video](evidencia/V1/V1_balanza_servomotor.mp4) · [cuaderno: la idea](evidencia/V1/V1_cuaderno_idea_balanza.jpg) · [cuaderno: boceto del prototipo](evidencia/V1/V1_cuaderno_boceto_prototipo.jpg) |
 
 **Decisiones iniciales**
-- [Completar.]
+- Una balanza de género: un brazo de cartón sobre un soporte en forma de pirámide, con hombres en amarillo
+  a un lado y mujeres en morado al otro.
+- Un servomotor (Tower Pro MG90S) movido por un Arduino. La página calcula el ángulo desde el porcentaje y
+  lo manda por USB (Web Serial): 50 % deja el brazo en 90°, horizontal, y los extremos lo inclinan hasta
+  10° o 170°.
+- La balanza se inclina hacia el género con mayor representación, y la inclinación es proporcional a la
+  diferencia porcentual entre ambos.
+- Partir con 3 o 5 escenarios, no con todas las carreras.
 
 **Por qué**
-- [Completar.]
+- Queríamos que elegir algo en el computador tuviera una respuesta física inmediata, y la balanza es la
+  imagen más conocida del equilibrio entre dos grupos. Calza con el 50 % que ya marca la paridad en la
+  visualización.
 
 **Qué se descartó**
-- [Completar.]
+- Un brazo de Lego: aparece en el boceto del cuaderno, pero en el video la balanza ya es de cartón forrado
+  con cartulina, como también anotamos ahí.
 
 ---
 
 ## 4. R1 · Revisión con el equipo docente
 
-- **Fecha:** [completar]
-- **Qué se discutió:** [completar]
-- **Qué adoptamos:** [completar]
-- **Qué dejamos en evaluación:** [completar]
-- **Cómo se ve en V2:** [completar]
+- **Fecha:** [confirmar]
+- **Qué se discutió:** cuatro preguntas sobre el prototipo físico.
+  1. Cuál es la verdadera diferencia entre la visualización y lo que estamos fisicalizando.
+  2. Qué queremos representar que se pueda percibir sin una pantalla.
+  3. Pensar en algo que le agregue significado físico.
+  4. Cómo mide la balanza, por qué y para qué.
+- **Qué adoptamos:** cambiar de balanza a sala de clases. Nuestras respuestas a las preguntas:
+  - La balanza solo repetía en un ángulo lo que la pantalla ya muestra con más precisión. Nadie puede leer
+    un porcentaje en 20° de inclinación, y no teníamos cómo justificar qué significaba ese ángulo
+    (pregunta 4). En la sala cada silla es una persona y se pueden contar.
+  - Lo que se percibe sin pantalla es una cantidad: cuántas de 30 sillas están en morado, y si son más, menos
+    o la mitad.
+  - El significado físico viene del lugar. Una sala de clases es donde ocurre lo que mide la visualización,
+    quién se sienta ahí, y los colores de cada silla son los mismos de la página.
+- **Qué dejamos en evaluación:** [completar si en la reunión quedó algo abierto]
+- **Cómo se ve en V2:** la balanza desaparece y aparece la sala con sillas y LEDs.
 
 ---
 
@@ -62,28 +106,73 @@
 
 | Campo | |
 |---|---|
-| **Versión / fecha** | V2 · [fecha] |
-| **Commit / tag** | [completar] |
-| **Evidencia** | [completar] |
+| **Versión / fecha** | V2 · 12/11/2026 |
+| **Commit / tag** | `b7ac553` (conexión a la maqueta de la sala) y `d7638f2` (video) · sin tag todavía |
+| **Evidencia** | [Video](evidencia/V2/V2_sala_de_clases_leds.mp4) |
 
 **Qué cambió respecto a V1**
-- [Completar.]
+- La balanza y el servomotor se reemplazan por una sala de cartón con 30 sillas. Cada silla es un cubo de
+  3 × 3 cm con dos LED blancos tapados por celofán, uno amarillo (hombres) y uno morado (mujeres).
+- Un Arduino Leonardo con chips 74HC595 prende los LED. La página manda por USB cuántas sillas deben quedar
+  moradas, y el resto se queda en amarillo.
+- `arduino.js` ahora habla con `SalaLEDs.ino` en vez del servo (el sketch de la balanza sigue en
+  `arduino/Infovis/`).
+- Una silla usa una sola resistencia de 330 Ω para sus dos LED, que van en polaridad opuesta: según el
+  nivel de la salida del chip prende uno u otro.
 
 **Por qué**
-- [Completar.]
+- Es la respuesta a R1. Con sillas, el porcentaje se puede contar y no hay que interpretar un ángulo.
+- Dos colores por silla mantienen la lectura de la página (amarillo hombres, morado mujeres), así no hay que
+  aprender otra leyenda.
+- Cada silla vale 3,3 puntos porcentuales. Alcanza para distinguir áreas que están a 20 o más puntos de
+  distancia, que es la diferencia que queremos mostrar.
 
 **Qué se descartó**
-- [Completar.]
+- Sillas que suben o bajan: eran 30 actuadores, mucho más caro y difícil de armar.
+- Una tira de LED direccionables (WS2812B), que simplificaba el cableado pero no tenía el efecto del
+  celofán sobre la silla. Seguimos con la opción de 60 LED.
+- Escanear carreras con un QR en la pizarra de la maqueta, que era parte de la idea original. Queda para
+  después.
 
 ---
 
 ## 6. R2 · Revisión entre pares
 
-- **Fecha / grupo que nos revisó:** [completar]
-- **Qué se discutió:** [completar]
-- **Qué adoptamos:** [completar]
-- **Qué descartamos:** [completar]
-- **Cómo se ve en V3 y V4:** [completar]
+- **Fecha / grupo que nos revisó:** 12/11/2026, Grupo 10. Nosotras revisamos al mismo grupo.
+- **Qué se discutió (lo que nos dijeron):**
+  - *Mensaje:* entendieron que la visualización sigue siendo la proporción de mujeres en las carreras
+    universitarias a lo largo de los años, a nivel país y por carrera.
+  - *Lo físico:* lo leyeron como una sala de clases donde cada silla tiene LED que representan la
+    distribución de hombres y mujeres según una categoría (región, carrera), y las luces cambian con lo que
+    muestra la página.
+  - *Usarlo:* basta con navegar por la página; el prototipo cambia solo.
+  - *Lo que funciona:* las mejoras de contraste de la página (achurados, colores) y la sala con luces
+    intercambiables, "clave para mostrar rápidamente las distribuciones".
+  - *Cambios que propusieron:* (1) un menú seleccionable en el celular, integrado al prototipo, a modo de
+    tótem informativo; (2) botones físicos o accesos rápidos para mostrar momentos históricos de los avances
+    de las mujeres en educación superior.
+  - Fotos: [mensaje, lo físico y usarlo](evidencia/R2/recibido_01_mensaje_fisico_usarlo.jpg) ·
+    [usarlo y los datos](evidencia/R2/recibido_02_usarlo_y_datos.jpg) ·
+    [conservar y cambiar](evidencia/R2/recibido_03_conservar_y_cambiar.jpg)
+- **Qué adoptamos:** el cambio 1. El teléfono pasó a ser el control de la selección (ver V3).
+- **Qué descartamos:** el cambio 2, los botones de hitos históricos. Por ahora lo dejamos fuera de V3
+  [confirmar o completar el motivo].
+- **Cómo se ve en V3 y V4:** el teléfono controla la sala desde V3. V4: [pendiente].
+
+**Feedback que dimos al Grupo 10.** Su prototipo mide el salto de una persona con el celular sujeto a una
+tobillera y lo compara con la altura y velocidad que tendría en otros planetas.
+- Les dijimos que conservaran la interacción del salto: vivirlo en el cuerpo y ver los saltos propios hace el
+  mensaje más memorable, y se obtiene el dato de una persona concreta en vez de un promedio.
+- Les dijimos que cambiaran el botón "saltar": hay que apretarlo y el análisis empieza a los 3 segundos, así
+  que se aprieta muy rápido, mirando el aparato del tobillo, y se cometen errores simples. Les propusimos
+  detectar el salto automáticamente.
+- Sobre los datos, anotamos que se perdía poder ver la altura en el celular y comparar con otros planetas
+  sin pasar al computador, ni ver todos los planetas a la vez con nuestro salto como referencia.
+- Fotos: [mensaje](evidencia/R2/dado_02_mensaje_y_lo_fisico.jpg) ·
+  [lo físico y usarlo](evidencia/R2/dado_03_lo_fisico_y_usarlo.jpg) ·
+  [usarlo y los datos](evidencia/R2/dado_04_usarlo_y_los_datos.jpg) ·
+  [síntesis, conservar y cambiar](evidencia/R2/dado_05_sintesis_conservar_cambiar.jpg) ·
+  [conservar y cambiar](evidencia/R2/dado_06_conservar_y_cambiar.jpg)
 
 ---
 
@@ -91,27 +180,41 @@
 
 | Campo | |
 |---|---|
-| **Versión / fecha** | V3 · [fecha] |
-| **Commit / tag** | [completar] |
-| **Evidencia** | [completar] |
+| **Versión / fecha** | V3 · 17/11/2026 |
+| **Commit / tag** | `0d0790f` (control desde el teléfono), `381870f` (cableado) y `8e280dc` (evidencia) · sin tag todavía |
+| **Evidencia** | [Video](evidencia/V3/V3_sala_leds_pagina_conectada.mp4) |
 
 **Qué cambió respecto a V2**
-- [Completar.]
+- Se puede elegir región, área o carrera desde un teléfono: la página muestra un QR, el teléfono abre la
+  misma página en la red local y `servidor.py` sincroniza la selección entre los dispositivos.
+- La página suma selectores de región, área y carrera, que se usan desde el teléfono o desde el computador.
+- El cableado se reorganizó: 4 protoboards, cada una con un chip 74HC595, en cadena desde tres pines del
+  Arduino Leonardo. Cada silla tiene su salida; el mapa real está en `arduino/SalaLEDs/README_conexiones.md`.
+- Cuando no hay nada seleccionado, una silla morada recorre la sala. Así no se confunde el estado de espera
+  con un dato.
+- La página funciona también sin servidor (por ejemplo en GitHub Pages): oculta el QR y avisa que está en
+  modo sin servidor.
 
 **Por qué**
-- [Completar.]
+- El teléfono como menú sale de R2 (cambio 1). Además, quien mira la sala puede elegir sin acercarse al
+  computador, y la sala queda como lo principal de la mesa.
+- Con los chips en cadena, 30 sillas y 60 LED salen de solo tres pines del Arduino, y la cantidad de pines
+  no crece con el número de sillas.
+- La animación de espera responde a que una sala con sillas moradas al azar se leía como un porcentaje.
 
 **Qué se descartó**
-- [Completar.]
+- Los botones físicos de hitos históricos (cambio 2 de R2), por ahora.
+- Escanear un QR por carrera en la maqueta: el teléfono controla la selección, pero el QR por carrera queda
+  para una iteración siguiente.
 
 ---
 
 ## 8. R3 · Revisión final con el equipo docente
 
-- **Fecha:** [completar]
-- **Qué se discutió:** [completar]
-- **Qué decidimos:** [completar]
-- **Cómo se ve en V4:** [completar]
+- **Fecha:** [pendiente]
+- **Qué se discutió:** [pendiente]
+- **Qué decidimos:** [pendiente]
+- **Cómo se ve en V4:** [pendiente]
 
 ---
 
@@ -119,24 +222,24 @@
 
 | Campo | |
 |---|---|
-| **Versión / fecha** | V4 · [fecha] |
-| **Commit / tag** | [completar] |
-| **Evidencia** | [completar] |
+| **Versión / fecha** | V4 · [pendiente] |
+| **Commit / tag** | [pendiente] |
+| **Evidencia** | [pendiente] |
 
 **Qué cambió respecto a V3**
-- [Completar.]
+- [Pendiente.]
 
 **Por qué**
-- [Completar.]
+- [Pendiente.]
 
 **Qué se descartó**
-- [Completar.]
+- [Pendiente.]
 
 **Balance del recorrido**
-- [Completar.]
+- [Pendiente.]
 
 ---
 
 ## 10. Comentarios finales
 
-[Completar con comentarios finales de la entrega.]
+[Pendiente.]

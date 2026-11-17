@@ -4,7 +4,7 @@ Proyecto grupal IIC2026 — Visualización de Información · Entrega 1: visuali
 Integrantes: Antonia Ramos · Oriana Crescio · Florencia Godoy
 
 **Acceso:**
-Para acceder a la visualización en la web: https://orianacrescio.github.io/proyecto_visualizacion/
+Para acceder a la visualización en la web: https://orianacrescio.github.io/proyecto_visualizacionE2/
 
 **Documento de entrega:** [`docs/entrega.md`](docs/entrega.md)
 

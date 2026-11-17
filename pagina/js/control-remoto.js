@@ -15,6 +15,8 @@
     let regionesListas = Boolean(window.VisualizacionRegiones);
     let enviosPendientes = Promise.resolve();
     let sincronizacionIniciada = false;
+    // En GitHub Pages (o sin servidor.py) no existe /api: la página sigue funcionando sola.
+    let sinServidor = false;
 
     function mostrarEstado(mensaje, error = false) {
         estado.textContent = mensaje;
@@ -96,11 +98,12 @@
             mostrarEstado(`Conectado · sala ${sala} · selección sincronizada`);
         } catch (error) {
             enviosPendientes = Promise.resolve();
-            mostrarEstado(`No se pudo sincronizar: ${error.message}`, true);
+            if (!sinServidor) mostrarEstado(`No se pudo sincronizar: ${error.message}`, true);
         }
     }
 
     async function leerSeleccionCompartida() {
+        if (sinServidor) return;
         try {
             const respuesta = await fetch(`/api/state?room=${encodeURIComponent(sala)}`, { cache: "no-store" });
             if (!respuesta.ok) throw new Error(`El servidor respondió ${respuesta.status}.`);
@@ -133,8 +136,9 @@
             });
             ayudaQr.textContent = "Escanea el código desde la misma red Wi‑Fi. La selección del teléfono cambiará esta pantalla.";
         } catch (error) {
-            ayudaQr.textContent = `No se pudo generar el QR: ${error.message}`;
-            mostrarEstado("Inicia el servidor local para habilitar la conexión por QR.", true);
+            sinServidor = true;
+            document.querySelector(".qr-panel").style.display = "none";
+            mostrarEstado("Modo sin servidor: la selección funciona en esta pantalla y en el Arduino conectado. Para controlarla desde el teléfono, corre servidor.py.");
         }
     }
 
@@ -183,9 +187,11 @@
             }
         });
 
-        crearQr();
-        leerSeleccionCompartida();
-        window.setInterval(leerSeleccionCompartida, 700);
+        crearQr().then(() => {
+            if (sinServidor) return;
+            leerSeleccionCompartida();
+            window.setInterval(leerSeleccionCompartida, 700);
+        });
     }
 
     window.addEventListener("carreras-ready", () => {
