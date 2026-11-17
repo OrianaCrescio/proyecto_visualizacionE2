@@ -57,7 +57,7 @@ El detalle de fuentes y variables está en [`investigacion.md`](investigacion.md
 | Campo | |
 |---|---|
 | **Versión / fecha** | V1 · 31/10/2026 |
-| **Commit / tag** | `6939953` (sin tag todavía) |
+| **Commit / tag** | tag `v1` (commit `6939953`) |
 | **Evidencia** | [Video](evidencia/V1/V1_balanza_servomotor.mp4) · [cuaderno: la idea](evidencia/V1/V1_cuaderno_idea_balanza.jpg) · [cuaderno: boceto del prototipo](evidencia/V1/V1_cuaderno_boceto_prototipo.jpg) |
 
 **Decisiones iniciales**
@@ -107,7 +107,7 @@ El detalle de fuentes y variables está en [`investigacion.md`](investigacion.md
 | Campo | |
 |---|---|
 | **Versión / fecha** | V2 · 12/11/2026 |
-| **Commit / tag** | `b7ac553` (conexión a la maqueta de la sala) y `d7638f2` (video) · sin tag todavía |
+| **Commit / tag** | tag `v2` (commit `d7638f2`, el del video; la conexión a la maqueta es `b7ac553`) |
 | **Evidencia** | [Video](evidencia/V2/V2_sala_de_clases_leds.mp4) |
 
 **Qué cambió respecto a V1**
@@ -174,7 +174,7 @@ tobillera y lo compara con la altura y velocidad que tendría en otros planetas.
 | Campo | |
 |---|---|
 | **Versión / fecha** | V3 · 17/11/2026 |
-| **Commit / tag** | `0d0790f` (control desde el teléfono), `381870f` (cableado) y `8e280dc` (evidencia) · sin tag todavía |
+| **Commit / tag** | tag `v3` (commit `8e280dc`, el de la evidencia; el control desde el teléfono es `0d0790f` y el cableado `381870f`) |
 | **Evidencia** | [Video](evidencia/V3/V3_sala_leds_pagina_conectada.mp4) |
 
 **Qué cambió respecto a V2**
