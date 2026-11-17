@@ -91,5 +91,5 @@ los archivos agregados de `procesamiento/intermedios/` y `pagina/data/`.
 
 ## Evaluación con usuarios
 
-La hoja del observador de la Entrega 2 está en [`docs/evaluacion_usuarios/sesion_01.md`](docs/evaluacion_usuarios/sesion_01.md)
+La hoja del observador de la Entrega 2 está en [`docs/evaluacion_usuarios/ronda_1.md`](docs/evaluacion_usuarios/ronda_1.md)
 y su resumen en la sección 10 de [`docs/entrega.md`](docs/entrega.md).
