@@ -42,8 +42,8 @@ docs/                              ← documentos del proyecto
 ├── metodologia.md                 cómo iteramos: ramas, commits, tags, checklists
 ├── investigacion.md               fuentes, variables y hallazgos en los datos
 ├── evaluacion_usuarios/           hoja del observador (thinking aloud), una por ronda
-└── evidencia/v1 … v4/             por versión: capturas, video y pagina/ (copia navegable)
-                                   ej. evidencia/v1/pagina/ = V1 revisada en la R1 (commit 0ba61f3)
+└── evidencia/V1 … V4/             por versión: capturas, video y pagina/ (copia navegable)
+                                   ej. evidencia/V1/pagina/ = V1 revisada en la R1 (commit 0ba61f3)
 
 procesamiento/                     ← de dónde salen los datos de pagina/data/ (la web no lo usa)
 ├── originales/                    País.csv, Región.csv (+ geo-chile/ y microdatos: no se suben)

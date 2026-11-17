@@ -13,5 +13,5 @@ vN/
 |---|---|---|---|
 
 
-Para guardar una versión nueva al cerrarla: copiar la carpeta `pagina/` completa a `docs/evidencia/vN/pagina/`
-(o desde git: `git archive <commit> pagina | tar -x -C docs/evidencia/vN`).
+Para guardar una versión nueva al cerrarla: copiar la carpeta `pagina/` completa a `docs/evidencia/VN/pagina/`
+(o desde git: `git archive <commit> pagina | tar -x -C docs/evidencia/VN`).
