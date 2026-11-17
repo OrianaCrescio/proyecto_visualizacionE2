@@ -83,7 +83,7 @@ El detalle de fuentes y variables está en [`investigacion.md`](investigacion.md
 
 ## 4. R1 · Revisión con el equipo docente
 
-- **Fecha:** [confirmar]
+- **Fecha:** [03/11/2026]
 - **Qué se discutió:** cuatro preguntas sobre el prototipo físico.
   1. Cuál es la verdadera diferencia entre la visualización y lo que estamos fisicalizando.
   2. Qué queremos representar que se pueda percibir sin una pantalla.
@@ -151,13 +151,11 @@ El detalle de fuentes y variables está en [`investigacion.md`](investigacion.md
   - *Cambios que propusieron:* (1) un menú seleccionable en el celular, integrado al prototipo, a modo de
     tótem informativo; (2) botones físicos o accesos rápidos para mostrar momentos históricos de los avances
     de las mujeres en educación superior.
-  - Fotos: [mensaje, lo físico y usarlo](evidencia/R2/recibido_01_mensaje_fisico_usarlo.jpg) ·
-    [usarlo y los datos](evidencia/R2/recibido_02_usarlo_y_datos.jpg) ·
-    [conservar y cambiar](evidencia/R2/recibido_03_conservar_y_cambiar.jpg)
 - **Qué adoptamos:** el cambio 1. El teléfono pasó a ser el control de la selección (ver V3).
-- **Qué descartamos:** el cambio 2, los botones de hitos históricos. Por ahora lo dejamos fuera de V3
-  [confirmar o completar el motivo].
-- **Cómo se ve en V3 y V4:** el teléfono controla la sala desde V3. V4: [pendiente].
+- **Qué descartamos:** el cambio 2, los botones de hitos históricos, al menos en la maqueta. Lo dejamos fuera
+  de V3 y lo conversamos con el equipo docente en R3 (sección 8), que nos dijo que no hacía falta.
+- **Cómo se ve en V3 y V4:** el teléfono controla la sala desde V3. En V4 la selección pasa a una pizarra
+  en la maqueta (sección 9).
 
 **Feedback que dimos al Grupo 10.** Su prototipo mide el salto de una persona con el celular sujeto a una
 tobillera y lo compara con la altura y velocidad que tendría en otros planetas.
@@ -168,11 +166,6 @@ tobillera y lo compara con la altura y velocidad que tendría en otros planetas.
   detectar el salto automáticamente.
 - Sobre los datos, anotamos que se perdía poder ver la altura en el celular y comparar con otros planetas
   sin pasar al computador, ni ver todos los planetas a la vez con nuestro salto como referencia.
-- Fotos: [mensaje](evidencia/R2/dado_02_mensaje_y_lo_fisico.jpg) ·
-  [lo físico y usarlo](evidencia/R2/dado_03_lo_fisico_y_usarlo.jpg) ·
-  [usarlo y los datos](evidencia/R2/dado_04_usarlo_y_los_datos.jpg) ·
-  [síntesis, conservar y cambiar](evidencia/R2/dado_05_sintesis_conservar_cambiar.jpg) ·
-  [conservar y cambiar](evidencia/R2/dado_06_conservar_y_cambiar.jpg)
 
 ---
 
@@ -204,17 +197,36 @@ tobillera y lo compara con la altura y velocidad que tendría en otros planetas.
 
 **Qué se descartó**
 - Los botones físicos de hitos históricos (cambio 2 de R2), por ahora.
-- Escanear un QR por carrera en la maqueta: el teléfono controla la selección, pero el QR por carrera queda
-  para una iteración siguiente.
+- Escanear un QR por carrera en la maqueta: el teléfono controla la selección, pero la interacción desde la
+  propia maqueta queda para V4 (pizarra con código ArUco, sección 9).
 
 ---
 
 ## 8. R3 · Revisión final con el equipo docente
 
-- **Fecha:** [pendiente]
-- **Qué se discutió:** [pendiente]
-- **Qué decidimos:** [pendiente]
-- **Cómo se ve en V4:** [pendiente]
+- **Fecha:** 17/11/2026
+- **Qué se discutió:**
+  - Quedaron sorprendidos con el avance. Hablamos de que nos complicamos bastante armando el prototipo, y
+    les gustó la idea.
+  - Les contamos nuestra idea de poner en la maqueta una pizarra con la carrera y un código ArUco, para que
+    la interacción con la sala no dependa tanto de la visualización en el computador. Les pareció buena.
+  - Preguntaron por qué morado y amarillo, y dijeron que eso no se entiende bien: sugirieron una leyenda.
+    También sugirieron poner, en alguna parte, la pregunta que dice qué se está viendo en la visualización.
+  - Conversamos si sería útil mostrar en el celular o en el computador el porcentaje de mujeres en cada
+    cambio de luces.
+  - Les contamos lo que propuso el Grupo 10 en R2 sobre hechos históricos. Respondieron que no era necesario:
+    ya hay mucha información, y en la maqueta podría marear más. Quizás sí en la visualización virtual.
+- **Qué decidimos:** para V4 vamos a hacer tres cosas.
+  1. Que el botón de play de la línea de tiempo vaya cambiando los LED según lo seleccionado, sea una
+     carrera, una región o el país.
+  2. "Cerrar" la sala de clases con una pizarra que lleve el nombre de lo que se está viendo (una carrera en
+     específico), y por el otro lado un código ArUco que se pueda mover para elegir el año y ver el
+     porcentaje o la distribución de mujeres y hombres.
+  3. Agregar una leyenda que diga que morado son mujeres y amarillo son hombres.
+- **Qué dejamos en evaluación:** la pregunta que explica qué se está viendo y el porcentaje en pantalla junto
+  con el cambio de luces. La pizarra con el nombre cubre parte de lo primero, y tenemos que ver si alcanza.
+- **Qué descartamos:** los hitos históricos en la maqueta. Podrían ir en la visualización del computador.
+- **Cómo se ve en V4:** ver sección 9.
 
 ---
 
@@ -226,14 +238,21 @@ tobillera y lo compara con la altura y velocidad que tendría en otros planetas.
 | **Commit / tag** | [pendiente] |
 | **Evidencia** | [pendiente] |
 
-**Qué cambió respecto a V3**
-- [Pendiente.]
+**Qué cambia respecto a V3** (plan decidido en R3; falta construirlo)
+- Play en la línea de tiempo: los LED cambian año a año con lo que esté seleccionado.
+- Sala cerrada con una pizarra: de un lado el nombre de la carrera que se ve, del otro un código ArUco que
+  se mueve para elegir el año.
+- Leyenda: morado mujeres, amarillo hombres.
 
 **Por qué**
-- [Pendiente.]
+- Con V3 las luces mostraban una foto fija de la selección. El mensaje de la visualización incluye el
+  tiempo (1984–2025 en regiones, 2007–2026 en carreras), y la maqueta no lo mostraba.
+- La pizarra y el ArUco salen de la pregunta de cómo interactuar con la sala sin mirar el computador. Es la
+  idea del QR por carrera de V2, ahora con un objeto que se maneja con la mano.
+- Los docentes no entendían por qué morado y amarillo. Una leyenda lo dice sin que haya que explicarlo.
 
 **Qué se descartó**
-- [Pendiente.]
+- Hitos históricos en la maqueta (ver R3).
 
 **Balance del recorrido**
 - [Pendiente.]
