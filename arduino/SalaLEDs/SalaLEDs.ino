@@ -6,20 +6,52 @@
 const int DATO = 8, RELOJ = 9, LATCH = 10;
 const int N_CHIPS = 4;
 const int N_SILLAS = 30;
-const int OFFSET[N_CHIPS] = {0, 8, 16, 23};   // primera silla de cada placa, contando desde 0
 
-// Orden en que se pintan de morado las sillas (número de silla, de 1 a 30).
-// Así, las primeras filas del fondo se llenan primero. Si quieren que queden
-// repartidas por la sala, cambien el orden de esta lista.
-const byte ORDEN[N_SILLAS] = {
-   1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
-  11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-  21, 22, 23, 24, 25, 26, 27, 28, 29, 30
+// Cableado real de la maqueta, tal como quedó armado.
+// SILLA_EN[placa][salida] = número de silla que cuelga de esa salida del chip.
+// Las salidas van en orden QA a QH, que son las columnas del cable J: 14, 19, 24, 29, 34, 39, 44 y 49.
+// El 0 significa que esa salida no tiene silla.
+const byte SILLA_EN[N_CHIPS][8] = {
+  {14, 13, 12,  6,  5, 11,  4, 10},   // P1
+  { 9,  3,  8,  2,  1,  7, 15, 23},   // P2
+  {18, 17, 27, 26, 16, 25, 24,  0},   // P3
+  {22, 21, 30, 29, 20, 19, 28,  0}    // P4
 };
+
+// Orden en que se pintan de morado las sillas y en que las recorre la animación de espera.
+// Va fila por fila, empezando por la fila de abajo (la de 6 sillas) y subiendo.
+//   ORDEN_NORMAL:    1 a 6, 7 a 14, 15 a 22, 23 a 30
+//   ORDEN_INVERTIDO: la misma fila por fila, pero cada fila al revés (6 a 1, 14 a 7, ...)
+// Si en la maqueta el recorrido va de derecha a izquierda, ponen INVERTIR_FILAS en true.
+const bool INVERTIR_FILAS = false;
+
+const byte ORDEN_NORMAL[N_SILLAS] = {
+   1,  2,  3,  4,  5,  6,
+   7,  8,  9, 10, 11, 12, 13, 14,
+  15, 16, 17, 18, 19, 20, 21, 22,
+  23, 24, 25, 26, 27, 28, 29, 30
+};
+const byte ORDEN_INVERTIDO[N_SILLAS] = {
+   6,  5,  4,  3,  2,  1,
+  14, 13, 12, 11, 10,  9,  8,  7,
+  22, 21, 20, 19, 18, 17, 16, 15,
+  30, 29, 28, 27, 26, 25, 24, 23
+};
+const byte* ORDEN = INVERTIR_FILAS ? ORDEN_INVERTIDO : ORDEN_NORMAL;
+
+// Animación de espera (cuando no hay nada seleccionado en la página).
+// Cada silla se prende sola este tiempo. Para probar el cableado conviene 3000 (3 segundos).
+// Para dejarla como animación de espera de verdad, bajen a unos 300.
+const unsigned long PASO_ESPERA_MS = 3000;
+
+// true: en cada paso de la animación escribe "Silla N" en el Monitor Serie (9600 baudios).
+// Sirve para saber qué número se está probando. Pónganlo en false cuando ya no lo necesiten.
+const bool DEPURAR = true;
 
 byte estado[N_CHIPS];            // bit en 1 = amarillo, bit en 0 = morado
 
 bool esperando = true;           // true = animación de espera
+bool primerPaso = true;          // para que la primera silla se prenda al tiro
 int posEspera = 0;
 unsigned long ultimoPaso = 0;
 
@@ -27,11 +59,15 @@ char linea[8];
 byte largo = 0;
 
 void setSilla(int n, bool amarillo) {            // n de 1 a 30
-  int c = N_CHIPS - 1;
-  while (n - 1 < OFFSET[c]) c--;
-  int bit = (n - 1) - OFFSET[c];
-  if (amarillo) estado[c] |= (1 << bit);
-  else          estado[c] &= ~(1 << bit);
+  for (int c = 0; c < N_CHIPS; c++) {
+    for (int bit = 0; bit < 8; bit++) {
+      if (SILLA_EN[c][bit] == n) {
+        if (amarillo) estado[c] |= (1 << bit);
+        else          estado[c] &= ~(1 << bit);
+        return;
+      }
+    }
+  }
 }
 
 void todasAmarillas() {
@@ -58,6 +94,8 @@ void procesarLinea() {
 
   if (linea[0] == 'R') {
     esperando = true;
+    primerPaso = true;
+    posEspera = 0;
     return;
   }
 
@@ -90,11 +128,16 @@ void loop() {
     }
   }
 
-  if (esperando && millis() - ultimoPaso > 150) {
+  if (esperando && (primerPaso || millis() - ultimoPaso >= PASO_ESPERA_MS)) {
+    primerPaso = false;
     ultimoPaso = millis();
     todasAmarillas();
     setSilla(ORDEN[posEspera], false);
     mostrar();
+    if (DEPURAR) {
+      Serial.print("Silla ");
+      Serial.println(ORDEN[posEspera]);
+    }
     posEspera = (posEspera + 1) % N_SILLAS;
   }
 }
