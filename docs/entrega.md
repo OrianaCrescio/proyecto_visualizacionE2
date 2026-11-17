@@ -157,15 +157,24 @@ El detalle de fuentes y variables está en [`investigacion.md`](investigacion.md
 - **Cómo se ve en V3 y V4:** el teléfono controla la sala desde V3. En V4 la selección pasa a una pizarra
   en la maqueta (sección 9).
 
-**Feedback que dimos al Grupo 10.** Su prototipo mide el salto de una persona con el celular sujeto a una
-tobillera y lo compara con la altura y velocidad que tendría en otros planetas.
-- Les dijimos que conservaran la interacción del salto: vivirlo en el cuerpo y ver los saltos propios hace el
-  mensaje más memorable, y se obtiene el dato de una persona concreta en vez de un promedio.
-- Les dijimos que cambiaran el botón "saltar": hay que apretarlo y el análisis empieza a los 3 segundos, así
-  que se aprieta muy rápido, mirando el aparato del tobillo, y se cometen errores simples. Les propusimos
-  detectar el salto automáticamente.
-- Sobre los datos, anotamos que se perdía poder ver la altura en el celular y comparar con otros planetas
-  sin pasar al computador, ni ver todos los planetas a la vez con nuestro salto como referencia.
+### El proyecto evaluado: Grupo 10
+
+Su prototipo mide el salto de una persona con el celular sujeto a una tobillera y compara la altura y la
+velocidad con las que saltaría en otros planetas. Lo probamos el 12/11/2026. Se entra escaneando un QR con el
+teléfono, se conecta el sensor, se elige "saltar" y se ve el resultado en el computador.
+
+### El feedback que dimos
+- Conservar la interacción del salto: vivirlo en el cuerpo y ver los saltos propios hace el mensaje más
+  memorable, y entrega el dato de una persona concreta en vez de un promedio.
+- Cambiar el botón "saltar": hay que apretarlo y el análisis empieza a los 3 segundos, así que se aprieta muy
+  rápido, mirando el aparato del tobillo, y se cometen errores simples. Propusimos detectar el salto
+  automáticamente.
+- Se pierde poder ver la altura en el celular y comparar con otros planetas sin pasar al computador, y no se
+  pueden ver todos los planetas a la vez con nuestro salto como referencia.
+
+### Lo que nos llevamos para nuestro proyecto
+- [Completar: errores de ellos que reconocimos en el nuestro, ideas que adaptamos (citando al Grupo 10) y
+  decisiones nuestras que salieron confirmadas.]
 
 ---
 
@@ -259,6 +268,19 @@ tobillera y lo compara con la altura y velocidad que tendría en otros planetas.
 
 ---
 
-## 10. Comentarios finales
+## 10. Evaluación con usuarios
+
+La hoja del observador completa está en [`evaluacion_usuarios/sesion_01.md`](evaluacion_usuarios/sesion_01.md).
+
+- **Estado:** pendiente. La primera sesión de thinking aloud, con una persona externa que no haya visto el
+  prototipo, se hace con V3 antes de cerrar V4.
+- **Hipótesis antes de la sesión:** sin leyenda no se entiende el morado y el amarillo, no queda claro qué
+  pregunta responde la visualización, y la gente tarda en notar que la sala responde a la pantalla.
+- **Resultados, heurísticas y cambio que sale de la sesión:** [completar con la sesión real]
+- **En qué transición se incorporó:** [completar]
+
+---
+
+## 11. Comentarios finales
 
 [Pendiente.]
