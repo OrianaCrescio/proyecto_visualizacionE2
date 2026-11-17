@@ -58,9 +58,9 @@ procesamiento/                     ← de dónde salen los datos de pagina/data/
 ## Cómo correrlo
 
 ```bash
-# Visualización en local (abrir http://localhost:8000/pagina/)
-# Ojo: abrir el index.html con doble clic NO funciona (el navegador bloquea la carga de datos)
-python3 -m http.server 8000
+# Visualización local con sincronización por QR (ejecutar desde la raíz del proyecto)
+python3 servidor.py
+# Abrir en la computadora: http://localhost:8000/pagina/
 
 # Regenerar datos
 python3 procesamiento/scripts/procesar_regiones.py
@@ -70,6 +70,21 @@ python3 procesamiento/scripts/resumir_carreras.py
 pip install shapely
 python3 procesamiento/scripts/generar_mapa_regiones.py
 ```
+
+Conecta el teléfono a la misma red Wi‑Fi y escanea el QR que aparece en la página.
+La selección de una región, área o carrera desde cualquiera de los dispositivos se
+sincroniza con los demás. En la pantalla principal, conecta el Arduino por USB con
+el botón «Conectar Arduino»; la selección compartida enviará a las luces el porcentaje
+de mujeres de esa región, área o carrera. Elige siempre desde la pantalla principal
+para el sonido de la visualización y el dispositivo Arduino conectado. Para oír el
+sonido en el teléfono, pulsa
+«Activar sonido en este dispositivo» una vez; el navegador exige esa acción.
+Mantén la terminal del servidor abierta. Si el firewall pregunta, permite conexiones
+locales al puerto 8000.
+
+El QR y el control remoto requieren este servidor local; la versión estática de
+GitHub Pages sigue disponible para navegar, pero no sincroniza selecciones entre
+dispositivos.
 
 Los microdatos originales (~500 MB por año) y el GeoJSON por comuna no se suben al repositorio; solo
 los archivos agregados de `procesamiento/intermedios/` y `pagina/data/`.

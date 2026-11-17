@@ -491,6 +491,55 @@ const Carreras = (() => {
         d3.select("#max-carreras").text(anios[1]);
 
         actualizar();
+
+        window.VisualizacionCarreras = {
+            catalogo() {
+                const areas = Array.from(new Set(datos.map(d => d.area))).sort((a, b) => a.localeCompare(b, "es"));
+                return {
+                    areas,
+                    carreras: area => Array.from(new Set(datos.filter(d => d.area === area).map(d => d.carrera)))
+                        .sort((a, b) => a.localeCompare(b, "es"))
+                };
+            },
+            seleccionar(area, carrera = "") {
+                if (!porArea.get(anioActual)?.has(area)) return null;
+                if (carrera && !datos.some(d => d.area === area && d.carrera === carrera)) return null;
+
+                let actual = carrera
+                    ? datos.find(d => d.area === area && d.carrera === carrera && d.anio === anioActual && d.hombres + d.mujeres > 0)
+                    : null;
+                if (carrera && !actual) {
+                    actual = datos
+                        .filter(d => d.area === area && d.carrera === carrera && d.hombres + d.mujeres > 0)
+                        .sort((a, b) => b.anio - a.anio)[0];
+                    if (!actual) return null;
+                }
+
+                pausar();
+                if (carrera && actual.anio !== anioActual) {
+                    anioActual = actual.anio;
+                    d3.select("#slider-carreras").property("value", anioActual);
+                    d3.select("#anio-carreras").text(anioActual);
+                }
+
+                areaAbierta = area;
+                carreraSeleccionada = carrera ? { nombre: carrera, area } : null;
+                actualizar();
+
+                const resumen = actual ? sumar([actual]) : porArea.get(anioActual).get(area);
+                if (!resumen || resumen.total <= 0) return null;
+                Sonido.tocar(resumen.hombres, resumen.mujeres);
+                return { hombres: resumen.hombres, mujeres: resumen.mujeres };
+            },
+            limpiar() {
+                pausar();
+                areaAbierta = null;
+                carreraSeleccionada = null;
+                ServoMotor.resetear();
+                actualizar();
+            }
+        };
+        window.dispatchEvent(new Event("carreras-ready"));
     });
 
 })();

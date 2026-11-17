@@ -122,6 +122,14 @@ const Sonido = (() => {
         atenuarCapa(anteriores.mujeres, tiempo);
     }
 
+    function activar() {
+        iniciar();
+        return ctx.resume().catch(error => {
+            console.error("No se pudo activar el audio:", error);
+            throw error;
+        });
+    }
+
 
     function tocar(hombres, mujeres) {
         const total = hombres + mujeres;
@@ -169,6 +177,7 @@ const Sonido = (() => {
 
 
     return {
+        activar,
         tocar,
         detener
     };

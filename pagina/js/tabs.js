@@ -17,6 +17,8 @@ function activarTab(tab, moverFoco = false) {
     }
 }
 
+window.activarTabVisualizacion = activarTab;
+
 tabs.forEach((tab, index) => {
     tab.addEventListener("click", () => activarTab(tab));
     tab.addEventListener("keydown", event => {

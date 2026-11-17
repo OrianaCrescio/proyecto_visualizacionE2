@@ -228,6 +228,8 @@ const Mapa = (() => {
             .transition()
             .duration(300)
             .attr("fill", d => color(d.dato.prop_mujeres));
+
+        paths.classed("seleccionada", d => d.properties.region === regionSeleccionada);
     }
 
 

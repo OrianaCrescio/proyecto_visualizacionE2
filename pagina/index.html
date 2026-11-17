@@ -7,7 +7,7 @@
     <title>Matrícula en Educación Superior en Chile</title>
 
     <!-- ?v=N obliga al navegador a bajar la versión nueva: súbanlo cuando cambien CSS/JS -->
-    <link rel="stylesheet" href="css/style.css?v=20">
+    <link rel="stylesheet" href="css/style.css?v=21">
 </head>
 
 <body>
@@ -34,6 +34,38 @@
     </header>
 
     <main>
+
+        <section class="control-remoto" aria-labelledby="control-remoto-titulo">
+            <div class="controles-seleccion">
+                <h2 id="control-remoto-titulo">Elige qué explorar</h2>
+                <p>La selección se sincroniza en vivo con los dispositivos conectados a esta sala.</p>
+                <p class="nota-arduino">Conecta el Arduino por USB desde esta pantalla con el botón «Conectar Arduino» de arriba. Las selecciones del teléfono actualizarán sus luces.</p>
+
+                <label for="selector-region">Región</label>
+                <select id="selector-region">
+                    <option value="">Selecciona una región</option>
+                </select>
+
+                <label for="selector-area">Área del conocimiento</label>
+                <select id="selector-area">
+                    <option value="">Selecciona un área</option>
+                </select>
+
+                <label for="selector-carrera">Carrera</label>
+                <select id="selector-carrera" disabled>
+                    <option value="">Selecciona un área primero</option>
+                </select>
+
+                <button id="activar-sonido" type="button">Activar sonido en este dispositivo</button>
+                <p id="estado-sincronizacion" class="estado-sincronizacion" role="status">Conectando a la sala…</p>
+            </div>
+
+            <aside class="qr-panel" aria-label="Conectar un teléfono">
+                <strong>Conecta tu teléfono</strong>
+                <div id="qr-code" aria-label="Código QR para abrir esta visualización en el teléfono"></div>
+                <p id="qr-ayuda">Escanea el código QR desde la misma red Wi‑Fi para elegir qué mostrar.</p>
+            </aside>
+        </section>
 
         <div class="tabs" role="tablist" aria-label="Visualizaciones">
             <button
@@ -188,11 +220,13 @@
 
     <!-- Nuestro código -->
     <script src="js/arduino.js?v=2"></script>
-    <script src="js/sonido.js?v=12"></script>
-    <script src="js/regiones.js?v=14"></script>
-    <script src="js/mapa.js?v=10"></script>
-    <script src="js/carreras.js?v=14"></script>
-    <script src="js/tabs.js?v=2"></script>
+    <script src="js/sonido.js?v=13"></script>
+    <script src="js/regiones.js?v=16"></script>
+    <script src="js/mapa.js?v=11"></script>
+    <script src="js/carreras.js?v=16"></script>
+    <script src="js/tabs.js?v=3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="js/control-remoto.js?v=2"></script>
 
 </body>
 </html>

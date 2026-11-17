@@ -104,6 +104,29 @@ Promise.all([
 
         initializeSlider();
 
+        window.VisualizacionRegiones = {
+            listar: () => Array.from(new Set(allData.map(d => d.region).filter(region => region !== "Chile"))),
+            seleccionar(region) {
+                if (!allData.some(d => d.region === region && d.region !== "Chile")) return null;
+
+                regionSeleccionada = region;
+                updateYear(+d3.select("#year-slider").property("value"));
+
+                const anio = +d3.select("#year-slider").property("value");
+                const dato = allData.find(d => d.region === region && d.anio === anio && hasValidData(d));
+                if (!dato) return null;
+
+                Sonido.tocar(dato.hombres, dato.mujeres);
+                return { hombres: dato.hombres, mujeres: dato.mujeres };
+            },
+            limpiar() {
+                regionSeleccionada = null;
+                updateYear(+d3.select("#year-slider").property("value"));
+                ServoMotor.resetear();
+            }
+        };
+        window.dispatchEvent(new Event("regiones-ready"));
+
 
     })
 
@@ -569,6 +592,9 @@ function updateYear(year) {
                     ? 1
                     : 0.3
         );
+
+    svg.selectAll(".region-point")
+        .classed("seleccionada", d => d.region === regionSeleccionada);
 
     requestAnimationFrame(actualizarEnlacesRegiones);
     actualizarSeleccionRegion();
